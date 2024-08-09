@@ -1,17 +1,19 @@
-import './App.css'
-
-import Header from './components/Header'
-
+import "./App.css";
+import Header from "./components/Header";
+import { ThemeProvider } from "./components/ThemeProvider";
+import MainPage from "./pages/MainPage/MainPage";
 
 function App() {
-
   return (
     <>
       <div>
-        <Header />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          <MainPage />
+        </ThemeProvider>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
