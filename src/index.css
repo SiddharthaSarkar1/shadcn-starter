@@ -73,6 +73,6 @@
 .page-transition{
   opacity: 0;
   background: #000;
-  transform: translateY(40px);
-  filter: blur(12px);
+  transform: translateY(70px) !important;
+  filter: blur(12px) !important;
 }

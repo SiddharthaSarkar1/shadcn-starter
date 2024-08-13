@@ -5,6 +5,7 @@ import Container from "@/components/ui/container";
 import { ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
 
+
 const products = [
   {
     id: "1",

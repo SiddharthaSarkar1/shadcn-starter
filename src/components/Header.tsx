@@ -4,8 +4,10 @@ import Container from "./ui/container";
 import ProfileButton from "./ui/ProfileButton";
 import { useTheme } from "next-themes";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Link, Router, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
 
   const routes = [
@@ -14,14 +16,32 @@ const Header = () => {
       label: "Products",
     },
     {
-      href: "/",
+      href: "/categories",
       label: "Categories",
     },
     {
-      href: "/",
+      href: "/onsale",
       label: "On Sale",
     },
   ];
+
+  const sleep = (ms: number): Promise<void> => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const handleTransition = async (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    const href = (e.target as HTMLAnchorElement).pathname;
+
+    const body = document.querySelector("body");
+    body?.classList.add("page-transition");
+    await sleep(300);
+    navigate(href);
+    await sleep(300);
+    body?.classList.remove("page-transition");
+  };
 
   return (
     <header className="sm:flex sm:justify-between py-3 px-4 border-b">
@@ -35,13 +55,13 @@ const Header = () => {
               <SheetContent side="left" className="w-[300px] sm:w-[400px]">
                 <nav className="flex flex-col gap-4">
                   {routes.map((route, i) => (
-                    <a
+                    <Link
                       key={i}
-                      href={route.href}
+                      to={route.href}
                       className="block px-2 py-1 text-lg"
                     >
                       {route.label}
-                    </a>
+                    </Link>
                   ))}
                 </nav>
               </SheetContent>
@@ -54,13 +74,14 @@ const Header = () => {
           <nav className="mx-6 flex items-center space-x-4 lg:space-x-6 hidden md:block">
             {routes.map((route, i) => (
               <Button asChild variant="ghost">
-                <a
+                <Link
                   key={i}
-                  href={route.href}
+                  to={route.href}
                   className="text-sm font-medium transition-colors"
+                  onClick={handleTransition}
                 >
                   {route.label}
-                </a>
+                </Link>
               </Button>
             ))}
           </nav>
